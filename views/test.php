@@ -1,5 +1,3 @@
-<title><?=$this->getTitle(); ?></title>
-
 <p>
 	OK
 </p>

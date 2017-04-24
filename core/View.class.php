@@ -31,8 +31,10 @@
 		{
 			ob_start();
 
-			require_once \core\FileManager::getViewPath($this->_file);
+			$content = \core\FileManager::getViewPath($this->_file);
 
+			require_once \core\FileManager::getViewPath('main');
+			
 			$output = ob_get_contents();
 
 			ob_end_clean();
