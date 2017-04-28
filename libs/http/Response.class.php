@@ -6,30 +6,30 @@
 	 */
 	class Response {
  
-		public function addHeader($header)
+		public static function addHeader($header)
 		{
 			header($header);
 		}
 
-		public function redirect($location)
+		public static function redirect($location)
 		{
 			header('Location: '. $location);
 			exit;
 		}
 
-		public function redirect404()
+		public static function redirect404()
 		{
 			header('HTTP/1.0 404 Not Found');
 			exit;
 		}
 
-		public function send(\core\View $view)
+		public static function send(\core\View $view)
 		{
 			exit($view->output());
 		}
  
 		// Changement par rapport à la fonction setcookie() : le dernier argument est par défaut à true
-		public function setCookie($name, $value = '', $expire = 0, $path = null, $domain = null, $secure = false, $httpOnly = true)
+		public static function setCookie($name, $value = '', $expire = 0, $path = null, $domain = null, $secure = false, $httpOnly = true)
 		{
 			setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
 		}

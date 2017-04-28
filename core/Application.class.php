@@ -3,6 +3,7 @@
 
 	require_once \core\FileManager::getLibPath('http/Request');
 	require_once \core\FileManager::getLibPath('http/Response');
+	require_once \core\FileManager::getLibPath('DB');
 	require_once \core\FileManager::getCorePath('View');
 
 	/**
@@ -10,8 +11,6 @@
 	 */
 	class Application {
 		
-		private $_httpRequest;
-		private $_httpResponse;
 		private $_view;
 		private $_user;
 		private $_controller;
@@ -21,8 +20,6 @@
 		 */
 		public function __construct()
 		{
-			$this->_httpRequest = new \libs\http\Request;
-			$this->_httpResponse = new \libs\http\Response;
 			$this->_view = new \core\View;
 		}
 		
@@ -33,21 +30,21 @@
 		{
 			//$_SESSION['id_user'] = '1';
 			// Si l'utilisateur est connecté
-			if($this->_httpRequest->sessionExists('id_user'))
+			if(\libs\http\Request::sessionExists('id_former'))
 			{
 				$this->_user = new \models\Former(array(
-														'idUser' => $this->_httpRequest->sessionData('id_user')
+														'idFormer' => (int)\libs\http\Request::sessionData('id_former')
 													)
 												);
 
 				// Chargement du module
-				if($this->_httpRequest->getExists('module'))
+				if(\libs\http\Request::getExists('module'))
 				{
-					$controller = $this->_httpRequest->getData('module');
+					$controller = \libs\http\Request::getData('module');
 				}
 				else
 				{
-					$this->_httpResponse->redirect404();
+					\libs\http\Response::redirect404();
 				}
 			}
 			else
@@ -68,7 +65,7 @@
 			}
 			else
 			{
-				$this->_httpResponse->redirect404();
+				\libs\http\Response::redirect404();
 			}
 		}
 
@@ -78,15 +75,15 @@
 		public function execute()
 		{
 			// Appel de la méthode par rapport au _GET ou default si inexistant
-			if($this->_httpRequest->getExists('action'))
+			if(\libs\http\Request::getExists('action'))
 			{
-				if(method_exists($this->_controller, 'action'. ucfirst($this->httpRequest->getData('action'))))
+				if(method_exists($this->_controller, 'action'. ucfirst(\libs\http\Request::getData('action'))))
 				{
-					$action = $this->httpRequest->getData('action');
+					$action = \libs\http\Request::getData('action');
 				}
 				else
 				{
-					$this->_httpResponse->redirect404();
+					\libs\http\Response::redirect404();
 				}
 			}
 			else
@@ -98,7 +95,7 @@
 
 			$this->_controller->$action();
 
-			$this->_httpResponse->send($this->_view);
+			\libs\http\Response::send($this->_view);
 		}
 	}
 ?>

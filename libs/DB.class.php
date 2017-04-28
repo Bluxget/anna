@@ -1,4 +1,7 @@
 <?php
+	namespace libs;
+	use \PDO;
+	
 	/**
 	 * Gestion des requêtes et de la connexion à la base de donnée basé sur le design pattern Singleton
 	 */
