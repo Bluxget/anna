@@ -46,7 +46,7 @@
 		/**
 		 * L'utilisateur se deconnecte
 		 */
-		public function actionDeconnect()
+		public function actionDisconnect()
 		{
 			session_destroy();
 
