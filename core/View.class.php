@@ -29,6 +29,8 @@
 
 		public function output()
 		{
+			$datas = $this->getDatas();
+
 			ob_start();
 
 			$content = \core\FileManager::getViewPath($this->_file);

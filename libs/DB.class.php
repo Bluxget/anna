@@ -43,7 +43,8 @@
 		{
 			foreach($params as &$param)
 			{
-				$param = htmlentities($param);
+				if(gettype($param) == 'string')
+					$param = htmlentities(addslashes($param));
 			}
 			
 			return $params;
@@ -55,7 +56,7 @@
 		 * @param string $request Requête à effectuer
 		 * @param array $params Paramètres liés à la requête
 		 *
-		 * @return array
+		 * @return PDOStatement
 		 */
 		public static function query(string $request, array $params = null)
 		{
@@ -72,7 +73,7 @@
 			$req = self::$_db->prepare($request);
 			$req->execute($params);
 			
-			return $req->fetchAll();
+			return $req;
 		}
 	}
 ?>

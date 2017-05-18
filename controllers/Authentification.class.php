@@ -29,7 +29,7 @@
 			{
 				$salt = 'K8G9KDZ';
 
-				$reqResult = \libs\DB::query('SELECT * FROM formers WHERE name = ? AND password = ? LIMIT 1', array($_POST['username'], sha1($salt . $_POST['password'])));
+				$reqResult = \libs\DB::query('SELECT * FROM formers WHERE name = ? AND password = ? LIMIT 1', array($_POST['username'], sha1($salt . $_POST['password'])))->fetchAll();
 
 				if(count($reqResult) > 0)
 				{
@@ -46,7 +46,7 @@
 		/**
 		 * L'utilisateur se deconnecte
 		 */
-		public function actionDeconnect()
+		public function actionDisconnect()
 		{
 			session_destroy();
 

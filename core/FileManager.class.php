@@ -67,6 +67,18 @@
 		{
 			return self::PROJECT_PATH .'core/'. $file .'.class.php';
 		}
+
+		/**
+		 * Retourne le chemin de la persistence demandé
+		 *
+		 * @param string $file
+		 *
+		 * @return string
+		 */
+		public static function getPersistencePath(string $file)
+		{
+			return self::PROJECT_PATH .'persistences/'. $file .'.class.php';
+		}
 	}
 
 	// Inclusion automatique des models
