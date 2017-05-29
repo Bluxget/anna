@@ -9,7 +9,7 @@
 <h1>Liste des apprentis du CFAI84</h1>
 
 <!-- Bouton ajouter nouvel apprenti, redirige vers méthode ajouter -->
-<form  action="?module=apprentis&action=ajouter" method="post">
+<form action="?module=apprentis&action=ajouter" method="post">
 <input type="image" src="contents/img/ajouter.png" width="50" height="50">
 </form>
 

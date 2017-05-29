@@ -22,11 +22,12 @@ CREATE TABLE tests (
 ) ENGINE = InnoDB;
 
 CREATE TABLE marks (
-	id_apprentice INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id_apprentice INT UNSIGNED NOT NULL,
 	id_former INT UNSIGNED NOT NULL,
 	id_test INT UNSIGNED NOT NULL,
 	published BOOLEAN NOT NULL,
 	mark DOUBLE NOT NULL,
+	comment TEXT NOT NULL,
 	CONSTRAINT `fk_marks_apprentices`
 		FOREIGN KEY (id_apprentice) REFERENCES apprentices (id_apprentice)
 		ON DELETE CASCADE

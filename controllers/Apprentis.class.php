@@ -99,5 +99,30 @@
 
 			\libs\http\Response::redirect('?module=apprentis');
 		}
+
+		/**
+		 * Importe les apprentis à partir d'un CSV
+		 */
+		public function actionCsv()
+		{
+			if(\libs\http\Request::postExists('fichier'))
+			{
+				/*$file = fopen($_FILES['attachment']['tmp_name']);
+				
+				while(($line = fgetcsv($file, 1000, ",")) !== FALSE)
+				{
+					$params = array(
+						'idApprentice' => \libs\http\Request::postData('id_apprentice')
+					);
+
+					$apprentice = new \models\Apprentice($params);
+
+					\persistences\Apprentice::delete($apprentice);
+				}*/
+			}
+
+			$this->_view->setFile('apprentis_csv');
+			$this->_view->setTitle('Importer des apprentis');
+		}
 	}
 ?>

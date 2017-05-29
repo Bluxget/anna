@@ -44,7 +44,7 @@
 				}
 				else
 				{
-					\libs\http\Response::redirect404();
+					\libs\http\Response::redirect('?module=marks');
 				}
 			}
 			else

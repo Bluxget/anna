@@ -13,17 +13,17 @@
 	Option<br/>
 	<!-- Le checked permet de vérifier la valeur sur la base d'un booléen -->
 <?php foreach($datas['options'] as $option): ?>
-	<input type="radio" value='<?=$option->getIdOption(); ?>' name="option"><?=$option->getName(); ?></input>
+	<input required type="radio" value='<?=$option->getIdOption(); ?>' name="option"><?=$option->getName(); ?></input>
 <?php endforeach; ?>
 	<br/><br/>
 	Nom</br>
 	<!-- Champ de saisie qui sera enregistré dans la base de données -->
-	<input type="text" value="" name="nom" /></br></br>
+	<input required type="text" value="" name="nom" /></br></br>
 	Prénom</br>
 	<!-- Champ de saisie qui sera enregistré dans la base de données -->
-	<input type="text" value="" name="prenom" /></br></br>
+	<input required type="text" value="" name="prenom" /></br></br>
 	Adresse mail</br>
 	<!-- Champ de saisie qui sera enregistré dans la base de données -->
-	<input type="mail" value="" name="email" /></br></br>
-	<input type="submit" name="ajouter" value="Ajouter" />
+	<input required type="mail" value="" name="email" /></br></br>
+	<input required type="submit" name="ajouter" value="Ajouter" />
 </form>
