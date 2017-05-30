@@ -24,7 +24,7 @@
 			return $optionsObj;
 		}
 
-		public static function getOne(int $id)
+		public static function getById(int $id)
 		{
 			$option = \libs\DB::query('SELECT * FROM options');
 
@@ -40,12 +40,12 @@
 			return $optionObj;
 		}
 
-		public static function update(\models\Option $option)
+		public static function update(\models\Option &$option)
 		{
 
 		}
 
-		public static function delete(\models\Option $option)
+		public static function delete(\models\Option &$option)
 		{
 
 		}

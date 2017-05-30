@@ -14,7 +14,7 @@
 		{
 			$datas['marks'] = \persistences\Mark::getAll();
 
-			$this->_view->setFile('marks_liste');
+			$this->_view->setFile('marks/list');
 			$this->_view->setTitle('Liste des notes');
 			$this->_view->setDatas($datas);
 		}
@@ -28,7 +28,7 @@
 			{
 				$params = array(
 						'idApprentice' => \libs\http\Request::postData('idApprentice'), 
-						'idFormer' => \libs\http\Request::postData('idFormer'), 
+						'idFormer' => \libs\http\Request::sessionData('id_former'), 
 						'idTest' => \libs\http\Request::postData('idTest'), 
 						'mark' => \libs\http\Request::postData('mark'),
 						'comment' => \libs\http\Request::postData('comment')
@@ -39,7 +39,7 @@
 				\persistences\Mark::insert($mark);
 			}
 
-			\libs\http\Response::redirect('?module=marks');
+			\libs\http\Response::redirect('?ctrl=marks');
 		}
 
 		/**
@@ -59,7 +59,7 @@
 				\persistences\Mark::delete($mark);
 			}
 
-			\libs\http\Response::redirect('?module=marks');
+			\libs\http\Response::redirect('?ctrl=marks');
 		}
 	}
 ?>

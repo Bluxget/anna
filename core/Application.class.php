@@ -5,6 +5,7 @@
 	require_once \core\FileManager::getLibPath('http/Response');
 	require_once \core\FileManager::getLibPath('DB');
 	require_once \core\FileManager::getCorePath('View');
+	require_once \core\FileManager::getPersistencePath('Former');
 
 	/**
 	 * Classe principale de l'application
@@ -28,23 +29,19 @@
 		 */
 		public function init()
 		{
-			//$_SESSION['id_user'] = '1';
 			// Si l'utilisateur est connecté
 			if(\libs\http\Request::sessionExists('id_former'))
 			{
-				$this->_user = new \models\Former(array(
-														'idFormer' => (int)\libs\http\Request::sessionData('id_former')
-													)
-												);
+				$this->_user = \persistences\Former::getById((int)\libs\http\Request::sessionData('id_former'));
 
-				// Chargement du module
-				if(\libs\http\Request::getExists('module'))
+				// Chargement du controleur
+				if(\libs\http\Request::getExists('ctrl'))
 				{
-					$controller = \libs\http\Request::getData('module');
+					$controller = \libs\http\Request::getData('ctrl');
 				}
 				else
 				{
-					\libs\http\Response::redirect('?module=marks');
+					\libs\http\Response::redirect('?ctrl=marks');
 				}
 			}
 			else
@@ -56,12 +53,17 @@
 
 			if(file_exists(\core\FileManager::getControllerPath($controller)))
 			{
-				// Inclusion de la class du module
+				// Inclusion de la class du controleur
 				require_once \core\FileManager::getControllerPath($controller);
 
 				$controller = '\\controllers\\'. $controller;
 				// Création de l'objet
 				$this->_controller = new $controller($this->_view);
+
+				if($this->_controller->getAccess() == 'responsable' && $this->_user->getRank() == 'formateur')
+				{
+					\libs\http\Response::redirect404();
+				}
 			}
 			else
 			{

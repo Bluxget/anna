@@ -16,20 +16,21 @@
 		public function getPassword() { return $this->_password; }
 
 		public function setIdFormer(int $idFormer)
-		{ 
+		{
 			$this->_idFormer = $idFormer;
 		}
-		public function setRank(int $idRank)
-		{ 
+		public function setRank(string $rank)
+		{
 			$this->_rank = $rank;
 		}
 		public function setName(string $name)
-		{ 
+		{
 			$this->_name = $name;
 		}
 		public function setPassword(string $password)
-		{ 
-			$this->_password = $password;
+		{
+			$salt = 'K8G9KDZ';
+			$this->_password = sha1($salt . $password);
 		}
 	}
 ?>

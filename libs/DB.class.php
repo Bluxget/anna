@@ -75,5 +75,15 @@
 			
 			return $req;
 		}
+
+		/**
+		 * Retourne l'identifiant de la dernière ligne insérée ou la valeur d'une séquence
+		 *
+		 * @return String
+		 */
+		public static function getLastInsertId()
+		{
+			return self::$_db->lastInsertId();
+		}
 	}
 ?>

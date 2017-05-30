@@ -28,7 +28,7 @@
 			return $marksObj;
 		}
 
-		public static function getOne(int $id)
+		public static function getById(int $id)
 		{
 			$mark = \libs\DB::query('SELECT * FROM marks INNER JOIN apprentices ON marks.id_apprentice = apprentices.idapprentice INNER JOIN options ON apprentices.id_option = options.id_option WHERE marks.id_apprentice = ?', array($id))->fetch();
 
@@ -45,7 +45,7 @@
 			return $marksObj;
 		}
 
-		public static function insert(\models\Mark $mark)
+		public static function insert(\models\Mark &$mark)
 		{
 			$params = array(
 					$mark->getIdApprentice(),
@@ -58,7 +58,7 @@
 			\libs\DB::query('INSERT INTO marks(id_apprentice, id_former, id_test, mark, comment) VALUES(?, ?, ?, ?, ?)', $params);
 		}
 
-		public static function delete(\models\Mark $mark)
+		public static function delete(\models\Mark &$mark)
 		{
 			$params = array(
 					$mark->getIdApprentice(),
@@ -66,6 +66,8 @@
 				);
 
 			\libs\DB::query('DELETE FROM marks WHERE id_apprentice = ? AND id_former = ? LIMIT 1', $params);
+
+			unset($mark);
 		}
 	}
 ?>

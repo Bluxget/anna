@@ -28,7 +28,7 @@
 			return $apprenticesObj;
 		}
 
-		public static function getOne(int $id)
+		public static function getById(int $id)
 		{
 			$apprentice = \libs\DB::query('SELECT * FROM apprentices INNER JOIN options ON apprentices.id_option = options.id_option WHERE id_apprentice = ?', array($id))->fetch();
 
@@ -45,7 +45,7 @@
 			return $apprenticeObj;
 		}
 
-		public static function insert(\models\Apprentice $apprentice)
+		public static function insert(\models\Apprentice &$apprentice)
 		{
 			$params = array(
 					$apprentice->getIdOption(), 
@@ -55,9 +55,11 @@
 				);
 
 			\libs\DB::query('INSERT INTO apprentices(id_option, first_name, last_name, email) VALUES(?, ?, ?, ?)', $params);
+
+			$apprentice->setIdApprentice(\libs\DB::getLastInsertId());
 		}
 
-		public static function update(\models\Apprentice $apprentice)
+		public static function update(\models\Apprentice &$apprentice)
 		{
 			$params = array(
 					$apprentice->getIdOption(), 
@@ -67,16 +69,18 @@
 					$apprentice->getIdApprentice()
 				);
 
-			\libs\DB::query('UPDATE apprentices SET id_option = ?, first_name = ?, last_name = ?, email = ? WHERE id_apprentice = ?', $params);
+			\libs\DB::query('UPDATE apprentices SET id_option = ?, first_name = ?, last_name = ?, email = ? WHERE id_apprentice = ? LIMIT 1', $params);
 		}
 
-		public static function delete(\models\Apprentice $apprentice)
+		public static function delete(\models\Apprentice &$apprentice)
 		{
 			$params = array(
 					$apprentice->getIdApprentice()
 				);
 
-			\libs\DB::query('DELETE FROM apprentices WHERE id_apprentice = ?', $params);
+			\libs\DB::query('DELETE FROM apprentices WHERE id_apprentice = ? LIMIT 1', $params);
+
+			unset($apprentice);
 		}
 	}
 ?>

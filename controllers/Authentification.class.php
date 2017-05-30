@@ -2,6 +2,7 @@
 	namespace controllers;
 
 	require_once \core\FileManager::getCorePath('Controller');
+	require_once \core\FileManager::getPersistencePath('Former');
 
 	class Authentification extends \core\Controller {
 
@@ -13,7 +14,7 @@
 			if(\libs\http\Request::sessionExists('id_former'))
 				\libs\http\Response::redirect('index.php');
 
-			$this->_view->setFile('authentification');
+			$this->_view->setFile('authentification/form');
 			$this->_view->setTitle('Authentification');
 		}
 
@@ -27,19 +28,22 @@
 
 			if(isset($_POST['username'], $_POST['password']))
 			{
-				$salt = 'K8G9KDZ';
+				$params = array(
+					'name' => \libs\http\Request::postData('username'), 
+					'password' => \libs\http\Request::postData('password')
+				);
 
-				$reqResult = \libs\DB::query('SELECT * FROM formers WHERE name = ? AND password = ? LIMIT 1', array($_POST['username'], sha1($salt . $_POST['password'])))->fetchAll();
+				$former = new \models\Former($params);
 
-				if(count($reqResult) > 0)
+				if(\persistences\Former::isValid($former) === TRUE)
 				{
-					$_SESSION['id_former'] = $reqResult[0]['id_former'];
+					$_SESSION['id_former'] = $former->getIdFormer();
 
 					\libs\http\Response::redirect('index.php');
 				}
 			}
 
-			$this->_view->setFile('authentification_error');
+			$this->_view->setFile('authentification/error');
 			$this->_view->setTitle('Authentification');
 		}
 
@@ -50,7 +54,7 @@
 		{
 			session_destroy();
 
-			$this->_view->setFile('authentification');
+			$this->_view->setFile('authentification/form');
 			$this->_view->setTitle('Authentification');
 		}
 	}
